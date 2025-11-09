@@ -279,3 +279,4 @@ tensorboard/ # For TensorBoard logs
 tmp/
 temp/
 *.tmp
+scripts/
