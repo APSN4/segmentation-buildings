@@ -1,5 +1,4 @@
 idea/
-data/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
@@ -234,7 +233,6 @@ Thumbs.db
 # Consider using data versioning tools like DVC for managing data.
 datasets/
 raw_data/
-*.csv
 *.tsv
 *.xlsx
 *.parquet
@@ -249,11 +247,9 @@ raw_data/
 # Model Artifacts
 # Trained models can be large and are often re-trainable.
 # Store them separately or use model versioning.
-models/
 checkpoints/
 *.pt
 *.pth
-*.h5
 *.keras
 *.onnx
 *.pb
@@ -280,3 +276,8 @@ tmp/
 temp/
 *.tmp
 scripts/
+
+.venv/
+notebooks/segmentation_run.ipynb
+patches/
+output/
