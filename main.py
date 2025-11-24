@@ -18,6 +18,15 @@ from utils.image_processing import load_image_from_bytes, label_to_rgb, create_r
 app = FastAPI(title=APP_TITLE)
 app.add_middleware(CORSMiddleware, **CORS_CONFIG)
 
+# Загружаем модель
+model = keras.models.load_model(
+    'models/83_accuracy/best_segmentation_model.h5',
+    custom_objects={
+        'jacard_coef': jacard_coef,
+        'loss': weighted_loss
+    }
+)
+
 
 @app.get("/")
 def read_root():
@@ -35,15 +44,6 @@ async def predict(file: UploadFile = File(...)):
         max_pixels = 4096 * 4096
         if img.shape[0] * img.shape[1] > max_pixels:
             raise HTTPException(status_code=400, detail="Изображение слишком большое")
-        
-        # Загружаем модель
-        model = keras.models.load_model(
-            'models/83_accuracy/best_segmentation_model.h5',
-            custom_objects={
-                'jacard_coef': jacard_coef,
-                'loss': weighted_loss
-            }
-        )
 
         # Приводим изображение к нужному размеру (256x256)
         img_resized = cv2.resize(img, (256, 256))
@@ -67,19 +67,6 @@ async def predict(file: UploadFile = File(...)):
 
         # Конвертируем маску в цветное RGB изображение
         prediction_rgb = label_to_rgb(mask_pred)
-
-        # Создаем папку output если её нет
-        os.makedirs('./output', exist_ok=True)
-
-        # Сохраняем результаты на диск
-        cv2.imwrite('./output/prediction_colored.png', cv2.cvtColor(prediction_rgb, cv2.COLOR_RGB2BGR))
-        cv2.imwrite('./output/prediction_mask.png', mask_pred.astype(np.uint8))
-        
-        # Наложение на оригинальное изображение
-        overlay = cv2.addWeighted(img_resized, 0.6, prediction_rgb, 0.4, 0)
-        cv2.imwrite('./output/prediction_overlay.png', cv2.cvtColor(overlay, cv2.COLOR_RGB2BGR))
-
-        print("\n✅ Предсказание завершено! Результаты сохранены в ./output/")
         
         # Возвращаем цветное изображение через API
         response_image = create_response_image(prediction_rgb)
