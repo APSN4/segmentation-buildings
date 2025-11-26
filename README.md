@@ -31,15 +31,15 @@
 
 **Backend:**
 - FastAPI 0.95.0 — REST API
-- TensorFlow 2.10.0 — инференс модели
-- Segmentation Models — предобученные архитектуры
+- TensorFlow 2.20.0 — инференс модели
+- Segmentation Models 1.0.1+ — предобученные архитектуры
 - OpenCV — обработка изображений
-- Uvicorn — ASGI сервер
+- Uvicorn 0.21.1 — ASGI сервер
 
 **Frontend:**
-- Streamlit 1.21.0 — интерактивный веб-интерфейс
-- Pillow — работа с изображениями
-- Requests — HTTP-клиент
+- Streamlit 1.51.0 — интерактивный веб-интерфейс
+- Pillow 9.5.0 — работа с изображениями
+- Requests 2.28.2 — HTTP-клиент
 
 **ML:**
 - Архитектура: U-Net + ResNet34 encoder
@@ -53,14 +53,14 @@
 ### Минимальные
 - Python 3.12
 - 8 ГБ RAM
-- 10 ГБ свободного места на диске
+- 15 ГБ свободного места на диске (модель + зависимости)
 - Windows 10/11, Linux (Ubuntu 20.04+), macOS 11+
 
 ### Рекомендуемые
 - Python 3.12
 - 16 ГБ RAM
 - NVIDIA GPU с 6+ ГБ VRAM (опционально, для ускорения)
-- CUDA 11.2+ и cuDNN 8.1+ (для GPU)
+- CUDA 11.8+ и cuDNN 8.6+ (для GPU с TensorFlow 2.20.0)
 
 ## ⚡ Быстрый старт
 
@@ -81,7 +81,7 @@ venv\Scripts\activate
 
 **Linux/macOS:**
 ```bash
-python3.10 -m venv venv
+python3.12 -m venv venv
 source venv/bin/activate
 ```
 
@@ -98,7 +98,7 @@ pip install -r requirements.txt
 
 ```
 models/
-└── best_segmentation_model.h5  (~93 МБ)
+└── best_segmentation_model.h5  (~280 МБ)
 ```
 
 ### 5. Запуск приложения
@@ -216,7 +216,7 @@ if response.status_code == 200:
 
 **Параметры:**
 - Всего параметров: 24.4 млн
-- Размер модели: 93 МБ
+- Размер модели: 280 МБ
 - Входное разрешение: 256×256×3
 - Выходные классы: 6
 
