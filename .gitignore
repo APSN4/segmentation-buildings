@@ -281,3 +281,5 @@ scripts/
 notebooks/segmentation_run.ipynb
 patches/
 output/
+*.md
+!README.md
