@@ -20,7 +20,7 @@ app.add_middleware(CORSMiddleware, **CORS_CONFIG)
 
 # Загружаем модель
 model = keras.models.load_model(
-    'models/83_accuracy/best_segmentation_model.h5',
+    'models/best_segmentation_model.h5',
     custom_objects={
         'jacard_coef': jacard_coef,
         'loss': weighted_loss
